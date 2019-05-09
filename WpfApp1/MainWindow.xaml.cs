@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,23 @@ namespace WpfApp1 {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+        }
+
+        private void mnuOpen_Click(object sender, RoutedEventArgs e) {
+            OpenFileDialog openDlg = new OpenFileDialog();
+            openDlg.Filter = "Text files|*.txt";
+            openDlg.Title = "Open text file";
+            openDlg.ShowDialog();
+
+            if (openDlg.FileName != "") {
+                try {
+                    MessageBox.Show("TODO: Open file " + openDlg.FileName);
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.ToString(), "Error when opening file");
+                }
+            }
+
         }
     }
 }

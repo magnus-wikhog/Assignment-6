@@ -9,7 +9,7 @@
     <Grid>
         <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Width="792">
             <MenuItem Header="File">
-                <MenuItem Header="Open..."/>
+                <MenuItem Header="Open..." Click="mnuOpen_Click"/>
             </MenuItem>
         </Menu>
     </Grid>
