@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Invoice;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace WpfApp1 {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        Invoice invoice;
+
         public MainWindow() {
             InitializeComponent();
         }
@@ -30,12 +33,14 @@ namespace WpfApp1 {
             openDlg.ShowDialog();
 
             if (openDlg.FileName != "") {
-                try {
-                    MessageBox.Show("TODO: Open file " + openDlg.FileName);
+                invoice = Invoice.createFromFile(openDlg.FileName);
+
+                if( invoice == null )
+                    MessageBox.Show("Error when reading file " + openDlg.FileName);
+                else {
+                    MessageBox.Show(invoice.invoiceNumber.ToString());
                 }
-                catch (Exception ex) {
-                    MessageBox.Show(ex.ToString(), "Error when opening file");
-                }
+
             }
 
         }
