@@ -23,11 +23,19 @@ namespace WpfApp1 {
 
         public MainWindow() {
             InitializeComponent();
-            this.DataContext = invoice;
-            openFile(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoiceDemo1.txt");
+            
+            // DEBUG
+            openFile(@"..\..\invoiceDemo1.txt");
+            invoice.logoImageFilename = @"C:\demo_logo.png";
+            logoImage.Source = new BitmapImage(new Uri(invoice.logoImageFilename));
+            OnInvoiceChanged();
+
+            Window1 w1 = new Window1();
+            w1.webBrowser.NavigateToString(invoice.toHtml(@"..\..\invoice_template.html"));
+            w1.Show();
         }
 
-        private void mnuOpen_Click(object sender, RoutedEventArgs e) {
+        private void mnuOpenInvoice_Click(object sender, RoutedEventArgs e) {
             OpenFileDialog openDlg = new OpenFileDialog();
             openDlg.Filter = "Text files|*.txt";
             openDlg.Title = "Open text file";
@@ -45,8 +53,6 @@ namespace WpfApp1 {
             if (invoice == null)
                 MessageBox.Show("Error when reading file " + filename);
             else{
-                //webBrowser.NavigateToString(invoice.toHtml(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoice_template.html"));
-
                 invoiceNumberLabel.Content = invoice.invoiceNumber;
                 invoiceDateEdit.Text = invoice.invoiceDate.ToShortDateString();
                 dueDateEdit.Text = invoice.dueDate.ToShortDateString();
@@ -54,17 +60,43 @@ namespace WpfApp1 {
                     invoice.receiver.zipCode + " " + invoice.receiver.city + "\n" + invoice.receiver.country;
                 senderCompanyNameLabel.Content = invoice.sender.companyName;
 
-
                 itemList.Items.Clear();
                 invoice.items.ForEach( item => itemList.Items.Add(item) );
+
+                senderCompanyNameLabel.Content = invoice.sender.companyName;
+                senderAddressLine1.Content = invoice.sender.streetAddress;
+                senderAddressLine2.Content = invoice.sender.zipCode + " " + invoice.sender.city + ", " + invoice.sender.country;
+                senderContactPhone.Content = invoice.sender.phone;
+                senderContactWebsite.Content = invoice.sender.website;
+
                 OnInvoiceChanged();
             }
         }
 
 
+        private void mnuLoadLogoImage_Click(object sender, RoutedEventArgs e) {
+            OpenFileDialog openDlg = new OpenFileDialog();
+            openDlg.Filter = "Image files|*.jpg;*.png;*.jpeg";
+            openDlg.Title = "Load logo image";
+            openDlg.ShowDialog();
+
+            if (openDlg.FileName != "") {
+                logoImage.Source = new BitmapImage(new Uri(openDlg.FileName));
+
+                if (invoice != null) {
+                    invoice.logoImageFilename = openDlg.FileName;
+                    OnInvoiceChanged();
+                }
+            }
+        }
+
+
         private void mnuPrint_Click(object sender, RoutedEventArgs e){
-            mshtml.IHTMLDocument2 doc = webBrowser.Document as mshtml.IHTMLDocument2;
-            doc.execCommand("Print", true, null);
+            Window1 w1 = new Window1();
+            w1.webBrowser.NavigateToString(invoice.toHtml(@"..\..\invoice_template.html"));
+            w1.Show();
+            //mshtml.IHTMLDocument2 doc = w1.webBrowser.Document as mshtml.IHTMLDocument2;
+            //doc.execCommand("Print", true, null);
         }
 
         private void DiscountEdit_PreviewTextInput(object sender, TextCompositionEventArgs e){
@@ -88,5 +120,8 @@ namespace WpfApp1 {
             }
         }
 
+        private void mnuExit_Click(object sender, RoutedEventArgs e) {
+            Close();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
     <head>
         <style>
             .topTable{
@@ -23,13 +24,21 @@
                 .itemsTable td, .itemsTable th{
                     border: 1px solid black;
                 }
+
+
+			.companyName{
+				text-align: center;
+				text-size: 1.5em;
+				font-weight: bold;
+			}
         </style>
+
     </head>
     <body>
         <table class="topTable">
             <tr>
                 <td class="topLeft">
-                    <b>$receiver/companyName</b>
+                    <div class="companyName">$sender/companyName</div>
                 </td>
                 <td class="topRight">
                     <p><b>Invoice number:</b> $invoiceNumber</p>

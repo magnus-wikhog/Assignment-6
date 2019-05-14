@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="601.987" Width="800">
+        Title="Assignment 6" Height="601.987" Width="800">
     <Grid>
-        <WebBrowser x:Name="webBrowser" Margin="10,183,766,371" RenderTransformOrigin="0.224,8.362"/>
         <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Width="792">
             <MenuItem Header="File">
-                <MenuItem Header="Open..." Click="mnuOpen_Click"/>
+                <MenuItem Header="Open invoice..." Click="mnuOpenInvoice_Click"/>
+                <MenuItem Header="Load logo image..." Click="mnuLoadLogoImage_Click"/>
+                <Separator/>
                 <MenuItem Header="Print..." Click="mnuPrint_Click"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="mnuExit_Click"/>
             </MenuItem>
         </Menu>
         <TextBox x:Name="discountEdit" HorizontalAlignment="Right" Height="23" Margin="0,0,10,34" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Bottom" Width="66" HorizontalContentAlignment="Right" PreviewTextInput="DiscountEdit_PreviewTextInput" TextChanged="DiscountEdit_TextChanged"/>
@@ -21,12 +24,12 @@
         <ListView x:Name="itemList" Margin="10,205,10,66" SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding description}" Header="Description" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding description}" Header="Description" Width="380"/>
                     <GridViewColumn DisplayMemberBinding="{Binding quantity}" Header="Quantity" Width="80"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding price}" Header="Price" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding price}" Header="Price" Width="80"/>
                     <GridViewColumn DisplayMemberBinding="{Binding taxPercent}" Header="Tax %" Width="60"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding totalTax}" Header="Total tax" Width="60"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding totalPrice}" Header="Total" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding totalTax}" Header="Total tax" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding totalPrice}" Header="Total" Width="80"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -35,8 +38,17 @@
         <Label Content="Invoice date" HorizontalAlignment="Left" Margin="482,49,0,0" VerticalAlignment="Top" Width="134"/>
         <Label Content="Due date" HorizontalAlignment="Left" Margin="482,73,0,0" VerticalAlignment="Top" Width="134"/>
         <Label x:Name="receiverDetailsLabel" Content="" HorizontalAlignment="Left" Margin="482,105,0,0" VerticalAlignment="Top" Width="300" Height="95"/>
-        <Label x:Name="senderCompanyNameLabel" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" Width="467" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16" Content=""/>
+        <Label x:Name="senderCompanyNameLabel" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="467" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16" Content=""/>
         <TextBox x:Name="invoiceDateEdit" HorizontalAlignment="Left" Height="23" Margin="621,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" HorizontalContentAlignment="Right"/>
         <TextBox x:Name="dueDateEdit" HorizontalAlignment="Left" Height="23" Margin="621,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" HorizontalContentAlignment="Right"/>
+        <Label x:Name="senderAddressLine1" Content="" HorizontalAlignment="Left" Margin="10,0,0,22" VerticalAlignment="Bottom" Padding="5,1"/>
+        <Label x:Name="senderAddressLine2" Content="" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Padding="5,1"/>
+        <Label Content="Address" HorizontalAlignment="Left" Margin="10,0,0,40" VerticalAlignment="Bottom" Padding="5,1" FontWeight="Bold"/>
+        <Label x:Name="senderContactPhone" Content="" HorizontalAlignment="Left" Margin="347,0,0,22" VerticalAlignment="Bottom" Padding="5,1"/>
+        <Label x:Name="senderContactWebsite" Content="" HorizontalAlignment="Left" Margin="347,0,0,4" VerticalAlignment="Bottom" Padding="5,1"/>
+        <Label Content="Contact" HorizontalAlignment="Left" Margin="347,0,0,40" VerticalAlignment="Bottom" Padding="5,1" FontWeight="Bold"/>
+        <Grid Height="101" HorizontalAlignment="Left" Margin="10,23,0,0" VerticalAlignment="Top" Width="467">
+            <Image x:Name="logoImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </Window>

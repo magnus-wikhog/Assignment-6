@@ -19,6 +19,7 @@ namespace WpfApp1 {
                 return total-discount;
             }
         }
+        public string logoImageFilename;
 
         public static Invoice createFromFile(string filename) {
             StreamReader file = null;
