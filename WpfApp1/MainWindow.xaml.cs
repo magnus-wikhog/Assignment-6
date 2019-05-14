@@ -44,7 +44,11 @@ namespace WpfApp1 {
             if (invoice == null)
                 MessageBox.Show("Error when reading file " + filename);
             else{
-                webBrowser.NavigateToString(invoice.toHtml(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoice_template.html"));
+                //webBrowser.NavigateToString(invoice.toHtml(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoice_template.html"));
+
+                itemList.Items.Clear();
+                invoice.items.ForEach( item => itemList.Items.Add(item) );
+                OnInvoiceChanged();
             }
         }
 
@@ -52,6 +56,27 @@ namespace WpfApp1 {
         private void mnuPrint_Click(object sender, RoutedEventArgs e){
             mshtml.IHTMLDocument2 doc = webBrowser.Document as mshtml.IHTMLDocument2;
             doc.execCommand("Print", true, null);
+        }
+
+        private void DiscountEdit_PreviewTextInput(object sender, TextCompositionEventArgs e){
+            decimal result;
+            e.Handled = !decimal.TryParse((sender as TextBox).Text + e.Text, out result);
+        }
+
+        private void DiscountEdit_TextChanged(object sender, TextChangedEventArgs e){
+            decimal result;
+            if (decimal.TryParse((sender as TextBox).Text, out result) && invoice != null ) {
+                invoice.discount = result;
+                OnInvoiceChanged();
+            }
+        }
+
+
+        private void OnInvoiceChanged(){
+            if (invoice != null){
+                discountEdit.Text = invoice.discount.ToString();
+                totalLabel.Content = invoice.total.ToString();
+            }
         }
 
     }

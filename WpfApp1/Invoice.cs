@@ -11,8 +11,14 @@ namespace WpfApp1 {
         public CompanyDetails sender;
         public int itemCount;
         public List<InvoiceItem> items = new List<InvoiceItem>();
-        public double discount;
-
+        public decimal discount;
+        public decimal total{
+            get{
+                decimal total = 0;
+                items.ForEach(item => total+=item.totalPrice);
+                return total-discount;
+            }
+        }
 
         public static Invoice createFromFile(string filename) {
             StreamReader file = null;
@@ -38,8 +44,8 @@ namespace WpfApp1 {
                     InvoiceItem item = new InvoiceItem();
                     item.description = file.ReadLine();
                     item.quantity = int.Parse(file.ReadLine());
-                    item.price = double.Parse(file.ReadLine().Replace('.', ','));
-                    item.taxPercent = double.Parse(file.ReadLine().Replace('.', ','));
+                    item.price = decimal.Parse(file.ReadLine().Replace('.', ','));
+                    item.taxPercent = decimal.Parse(file.ReadLine().Replace('.', ','));
                     invoice.items.Add(item);
                 }
 
@@ -81,12 +87,12 @@ namespace WpfApp1 {
             html = html.Replace("$receiver/website", receiver.website);
 
             string itemRows = "";
-            double totalTotal = 0;
-            double totalTotalTax = 0;
+            decimal totalTotal = 0;
+            decimal totalTotalTax = 0;
             items.ForEach( 
                 item => {
-                    double totalTax = item.quantity * item.price * (item.taxPercent / 100.0d);
-                    double total = totalTax + item.quantity * item.price;
+                    decimal totalTax = item.quantity * item.price * (item.taxPercent / 100);
+                    decimal total = totalTax + item.quantity * item.price;
                     totalTotalTax += totalTax;
                     totalTotal += total;
 
@@ -139,10 +145,12 @@ namespace WpfApp1 {
 
 
     class InvoiceItem {
-        public string description;
-        public int quantity;
-        public double price;
-        public double taxPercent;
+        public string description { get; set; }
+        public int quantity { get; set; }
+        public decimal price { get; set; }
+        public decimal taxPercent { get; set; }
+        public decimal totalTax { get => quantity*price*taxPercent/100; }
+        public decimal totalPrice { get => quantity * price + totalTax; }
     }
 
 

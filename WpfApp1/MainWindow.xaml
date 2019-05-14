@@ -7,12 +7,28 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <WebBrowser x:Name="webBrowser" Margin="17,32,749,366"/>
         <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Width="792">
             <MenuItem Header="File">
                 <MenuItem Header="Open..." Click="mnuOpen_Click"/>
                 <MenuItem Header="Print..." Click="mnuPrint_Click"/>
             </MenuItem>
         </Menu>
-        <WebBrowser x:Name="webBrowser" Margin="17,32,670,309"/>
+        <TextBox x:Name="discountEdit" HorizontalAlignment="Right" Height="23" Margin="0,0,10,34" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Bottom" Width="66" HorizontalContentAlignment="Right" PreviewTextInput="DiscountEdit_PreviewTextInput" TextChanged="DiscountEdit_TextChanged"/>
+        <Label Content="Discount" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,76,35" VerticalAlignment="Bottom" Width="133"/>
+        <Label Content="Total" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,76,4" VerticalAlignment="Bottom" Width="133" FontWeight="Bold"/>
+        <Label x:Name="totalLabel" Content="0,00" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,10,4" VerticalAlignment="Bottom" Width="66" FontWeight="Bold" />
+        <ListView x:Name="itemList" Margin="10,74,10,66" SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding description}" Header="Description" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding quantity}" Header="Quantity" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding price}" Header="Price" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding taxPercent}" Header="Tax %" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding totalTax}" Header="Total tax" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding totalPrice}" Header="Total" Width="60"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
