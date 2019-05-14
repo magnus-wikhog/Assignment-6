@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="601.987" Width="800">
     <Grid>
-        <WebBrowser x:Name="webBrowser" Margin="17,32,749,366"/>
+        <WebBrowser x:Name="webBrowser" Margin="10,183,766,371" RenderTransformOrigin="0.224,8.362"/>
         <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Width="792">
             <MenuItem Header="File">
                 <MenuItem Header="Open..." Click="mnuOpen_Click"/>
@@ -18,7 +18,7 @@
         <Label Content="Discount" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,76,35" VerticalAlignment="Bottom" Width="133"/>
         <Label Content="Total" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,76,4" VerticalAlignment="Bottom" Width="133" FontWeight="Bold"/>
         <Label x:Name="totalLabel" Content="0,00" HorizontalAlignment="Right" HorizontalContentAlignment="Right"  Margin="0,0,10,4" VerticalAlignment="Bottom" Width="66" FontWeight="Bold" />
-        <ListView x:Name="itemList" Margin="10,74,10,66" SelectionMode="Single">
+        <ListView x:Name="itemList" Margin="10,205,10,66" SelectionMode="Single">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding description}" Header="Description" Width="Auto"/>
@@ -30,5 +30,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label x:Name="invoiceNumberLabel" Content="" HorizontalAlignment="Left" Margin="621,23,0,0" VerticalAlignment="Top" Width="161" HorizontalContentAlignment="Right"/>
+        <Label Content="Invoice number" HorizontalAlignment="Left" Margin="482,23,0,0" VerticalAlignment="Top" Width="134"/>
+        <Label Content="Invoice date" HorizontalAlignment="Left" Margin="482,49,0,0" VerticalAlignment="Top" Width="134"/>
+        <Label Content="Due date" HorizontalAlignment="Left" Margin="482,73,0,0" VerticalAlignment="Top" Width="134"/>
+        <Label x:Name="receiverDetailsLabel" Content="" HorizontalAlignment="Left" Margin="482,105,0,0" VerticalAlignment="Top" Width="300" Height="95"/>
+        <Label x:Name="senderCompanyNameLabel" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" Width="467" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16" Content=""/>
+        <TextBox x:Name="invoiceDateEdit" HorizontalAlignment="Left" Height="23" Margin="621,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="dueDateEdit" HorizontalAlignment="Left" Height="23" Margin="621,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" HorizontalContentAlignment="Right"/>
     </Grid>
 </Window>

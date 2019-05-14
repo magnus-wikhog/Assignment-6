@@ -23,6 +23,7 @@ namespace WpfApp1 {
 
         public MainWindow() {
             InitializeComponent();
+            this.DataContext = invoice;
             openFile(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoiceDemo1.txt");
         }
 
@@ -45,6 +46,14 @@ namespace WpfApp1 {
                 MessageBox.Show("Error when reading file " + filename);
             else{
                 //webBrowser.NavigateToString(invoice.toHtml(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoice_template.html"));
+
+                invoiceNumberLabel.Content = invoice.invoiceNumber;
+                invoiceDateEdit.Text = invoice.invoiceDate.ToShortDateString();
+                dueDateEdit.Text = invoice.dueDate.ToShortDateString();
+                receiverDetailsLabel.Content = invoice.receiver.companyName + "\n" + invoice.receiver.contactPerson + "\n" + invoice.receiver.streetAddress + "\n" +
+                    invoice.receiver.zipCode + " " + invoice.receiver.city + "\n" + invoice.receiver.country;
+                senderCompanyNameLabel.Content = invoice.sender.companyName;
+
 
                 itemList.Items.Clear();
                 invoice.items.ForEach( item => itemList.Items.Add(item) );

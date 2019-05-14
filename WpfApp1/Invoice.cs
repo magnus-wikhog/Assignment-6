@@ -132,7 +132,7 @@ namespace WpfApp1 {
 
 
     class CompanyDetails {
-        public string companyName;
+        public string companyName { get; set; }
         public string contactPerson;
         public string streetAddress;
         public string zipCode;
