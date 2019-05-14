@@ -1,5 +1,4 @@
-﻿using Invoice;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +23,7 @@ namespace WpfApp1 {
 
         public MainWindow() {
             InitializeComponent();
+            openFile(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoiceDemo1.txt");
         }
 
         private void mnuOpen_Click(object sender, RoutedEventArgs e) {
@@ -33,16 +33,26 @@ namespace WpfApp1 {
             openDlg.ShowDialog();
 
             if (openDlg.FileName != "") {
-                invoice = Invoice.createFromFile(openDlg.FileName);
-
-                if( invoice == null )
-                    MessageBox.Show("Error when reading file " + openDlg.FileName);
-                else {
-                    MessageBox.Show(invoice.invoiceNumber.ToString());
-                }
-
+                openFile(openDlg.FileName);
             }
-
         }
+
+
+        private void openFile(string filename){
+            invoice = Invoice.createFromFile(filename);
+
+            if (invoice == null)
+                MessageBox.Show("Error when reading file " + filename);
+            else{
+                webBrowser.NavigateToString(invoice.toHtml(@"D:\Magnus\Temp\test\visual-studio\projects\Assignment-6\WpfApp1\invoice_template.html"));
+            }
+        }
+
+
+        private void mnuPrint_Click(object sender, RoutedEventArgs e){
+            mshtml.IHTMLDocument2 doc = webBrowser.Document as mshtml.IHTMLDocument2;
+            doc.execCommand("Print", true, null);
+        }
+
     }
 }

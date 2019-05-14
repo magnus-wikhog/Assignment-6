@@ -1,0 +1,58 @@
+﻿<html>
+    <head>
+        <style>
+            .topTable{
+                display: block;
+                width: 100%;
+                margin-top: 2em;
+                margin-bottom: 2em;
+            }
+                .topTable td{
+                    width: 49%;
+                }
+
+
+            .itemsTable{
+                display: block;
+                width: 100%;
+                margin-top: 2em;
+                margin-bottom: 2em;
+                border-collapse: collapse;
+                border: 1px solid black;                
+            }
+                .itemsTable td, .itemsTable th{
+                    border: 1px solid black;
+                }
+        </style>
+    </head>
+    <body>
+        <table class="topTable">
+            <tr>
+                <td class="topLeft">
+                    <b>$receiver/companyName</b>
+                </td>
+                <td class="topRight">
+                    <p><b>Invoice number:</b> $invoiceNumber</p>
+                    <p><b>Invoice date:</b> $invoiceDate</p>
+                    <p><b>Due date:</b> $dueDate</p>
+                    <p>
+                        $receiver/companyName<br />
+                        $receiver/contactPerson<br />
+                        $receiver/streetAddress<br />
+                        $receiver/zipCode $sender/city<br />
+                        $receiver/country
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        <table class="itemsTable">
+            <tr><th>Description</th><th>Quantity</th><th>Unit price</th><th>Tax (%)</th><th>Total Tax</th><th>Total</th></tr>
+            $itemRows
+            <tr><td colspan="4">Total</td><td>$totalTotalTax</td><td>$totalTotal</td></tr>
+            <tr><td colspan="5">Discount</td><td>$discount</td></tr>
+            <tr><td colspan="5">Amount to pay</td><td>$payableAmount</td></tr>
+        </table>
+
+    </body>
+</html>

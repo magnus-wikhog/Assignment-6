@@ -10,7 +10,9 @@
         <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Width="792">
             <MenuItem Header="File">
                 <MenuItem Header="Open..." Click="mnuOpen_Click"/>
+                <MenuItem Header="Print..." Click="mnuPrint_Click"/>
             </MenuItem>
         </Menu>
+        <WebBrowser x:Name="webBrowser" Margin="17,32,670,309"/>
     </Grid>
 </Window>

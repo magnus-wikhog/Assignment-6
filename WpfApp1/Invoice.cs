@@ -11,6 +11,7 @@ namespace WpfApp1 {
         public CompanyDetails sender;
         public int itemCount;
         public List<InvoiceItem> items = new List<InvoiceItem>();
+        public double discount;
 
 
         public static Invoice createFromFile(string filename) {
@@ -62,6 +63,64 @@ namespace WpfApp1 {
             }
         }
 
+
+        public string toHtml(string filename){
+            string html = File.ReadAllText(filename);
+
+            html = html.Replace("$invoiceNumber", invoiceNumber.ToString());
+            html = html.Replace("$invoiceDate", invoiceDate.ToString());
+            html = html.Replace("$dueDate", dueDate.ToString());
+
+            html = html.Replace("$receiver/companyName", receiver.companyName);
+            html = html.Replace("$receiver/contactPerson", receiver.contactPerson);
+            html = html.Replace("$receiver/streetAddress", receiver.streetAddress);
+            html = html.Replace("$receiver/zipCode", receiver.zipCode);
+            html = html.Replace("$receiver/city", receiver.city);
+            html = html.Replace("$receiver/country", receiver.country);
+            html = html.Replace("$receiver/phone", receiver.phone);
+            html = html.Replace("$receiver/website", receiver.website);
+
+            string itemRows = "";
+            double totalTotal = 0;
+            double totalTotalTax = 0;
+            items.ForEach( 
+                item => {
+                    double totalTax = item.quantity * item.price * (item.taxPercent / 100.0d);
+                    double total = totalTax + item.quantity * item.price;
+                    totalTotalTax += totalTax;
+                    totalTotal += total;
+
+                    itemRows += string.Format("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>",
+                        item.description,
+                        item.quantity,
+                        item.price,
+                        item.taxPercent,
+                        totalTax,
+                        total
+                    );
+                }
+            );
+            html = html.Replace("$itemRows", itemRows);
+
+            html = html.Replace("$totalTotalTax", totalTotalTax.ToString());
+            html = html.Replace("$totalTotal", totalTotal.ToString());
+            html = html.Replace("$discount", discount.ToString());
+            html = html.Replace("$payableAmount", (totalTotal-discount).ToString());
+
+            html = html.Replace("$sender/companyName", sender.companyName);
+            html = html.Replace("$sender/contactPerson", sender.contactPerson);
+            html = html.Replace("$sender/streetAddress", sender.streetAddress);
+            html = html.Replace("$sender/zipCode", sender.zipCode);
+            html = html.Replace("$sender/city", sender.city);
+            html = html.Replace("$sender/country", sender.country);
+            html = html.Replace("$sender/phone", sender.phone);
+            html = html.Replace("$sender/website", sender.website);
+
+
+            return html;
+        }
+
+
     }
 
 
@@ -85,5 +144,10 @@ namespace WpfApp1 {
         public double price;
         public double taxPercent;
     }
+
+
+
+
+
 
 }
