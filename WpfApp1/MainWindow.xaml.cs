@@ -25,14 +25,10 @@ namespace WpfApp1 {
             InitializeComponent();
             
             // DEBUG
-            openFile(@"..\..\invoiceDemo1.txt");
-            invoice.logoImageFilename = @"C:\demo_logo.png";
-            logoImage.Source = new BitmapImage(new Uri(invoice.logoImageFilename));
-            OnInvoiceChanged();
-
-            Window1 w1 = new Window1();
-            w1.webBrowser.NavigateToString(invoice.toHtml(@"..\..\invoice_template.html"));
-            w1.Show();
+            //openFile(@"..\..\invoiceDemo1.txt");
+            //invoice.logoImageFilename = @"C:\demo_logo.png";
+            //logoImage.Source = new BitmapImage(new Uri(invoice.logoImageFilename));
+            //OnInvoiceChanged();
         }
 
         private void mnuOpenInvoice_Click(object sender, RoutedEventArgs e) {
@@ -53,6 +49,8 @@ namespace WpfApp1 {
             if (invoice == null)
                 MessageBox.Show("Error when reading file " + filename);
             else{
+                tabControl.Visibility = Visibility.Visible;
+
                 invoiceNumberLabel.Content = invoice.invoiceNumber;
                 invoiceDateEdit.Text = invoice.invoiceDate.ToShortDateString();
                 dueDateEdit.Text = invoice.dueDate.ToShortDateString();
@@ -92,11 +90,9 @@ namespace WpfApp1 {
 
 
         private void mnuPrint_Click(object sender, RoutedEventArgs e){
-            Window1 w1 = new Window1();
-            w1.webBrowser.NavigateToString(invoice.toHtml(@"..\..\invoice_template.html"));
-            w1.Show();
-            //mshtml.IHTMLDocument2 doc = w1.webBrowser.Document as mshtml.IHTMLDocument2;
-            //doc.execCommand("Print", true, null);
+            tabControl.SelectedItem = printPreviewTab;
+            mshtml.IHTMLDocument2 doc = webBrowser.Document as mshtml.IHTMLDocument2;
+            doc.execCommand("Print", true, null);
         }
 
         private void DiscountEdit_PreviewTextInput(object sender, TextCompositionEventArgs e){
@@ -117,11 +113,35 @@ namespace WpfApp1 {
             if (invoice != null){
                 discountEdit.Text = invoice.discount.ToString();
                 totalLabel.Content = invoice.total.ToString();
+                webBrowser.NavigateToString(invoice.toHtml(@"..\..\invoice_template.html"));
             }
         }
 
         private void mnuExit_Click(object sender, RoutedEventArgs e) {
             Close();
+        }
+
+        private void InvoiceDateEdit_TextChanged(object sender, TextChangedEventArgs e) {
+            DateTime dt;
+            if (DateTime.TryParse((sender as TextBox).Text, out dt)) {
+                invoice.invoiceDate = dt;
+                OnInvoiceChanged();
+            }
+        }
+
+        private void DueDateEdit_TextChanged(object sender, TextChangedEventArgs e) {
+            DateTime dt;
+            if (DateTime.TryParse((sender as TextBox).Text, out dt)) {
+                invoice.dueDate = dt;
+                OnInvoiceChanged();
+            }
+        }
+
+
+        private void OnPrintPreviewTabSelected(object sender, RoutedEventArgs e) {
+            if ((sender as TabItem) != null) {
+                webBrowser.NavigateToString(invoice.toHtml(@"..\..\invoice_template.html"));
+            }
         }
     }
 }

@@ -75,8 +75,8 @@ namespace WpfApp1 {
             string html = File.ReadAllText(filename);
 
             html = html.Replace("$invoiceNumber", invoiceNumber.ToString());
-            html = html.Replace("$invoiceDate", invoiceDate.ToString());
-            html = html.Replace("$dueDate", dueDate.ToString());
+            html = html.Replace("$invoiceDate", invoiceDate.ToShortDateString());
+            html = html.Replace("$dueDate", dueDate.ToShortDateString());
 
             html = html.Replace("$receiver/companyName", receiver.companyName);
             html = html.Replace("$receiver/contactPerson", receiver.contactPerson);

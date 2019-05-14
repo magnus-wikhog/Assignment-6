@@ -1,5 +1,4 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<html>
     <head>
         <style>
             .topTable{
@@ -60,8 +59,18 @@
             $itemRows
             <tr><td colspan="4">Total</td><td>$totalTotalTax</td><td>$totalTotal</td></tr>
             <tr><td colspan="5">Discount</td><td>$discount</td></tr>
-            <tr><td colspan="5">Amount to pay</td><td>$payableAmount</td></tr>
+            <tr><td colspan="5">Amount to pay</td><td><b>$payableAmount</b></td></tr>
         </table>
+
+		<p>
+			<b>$sender/companyName</b><br />
+			$sender/streetAddress<br />
+			$sender/zipCode $sender/city<br />
+			$sender/country<br />
+			<br />
+			Phone: $sender/phone<br />
+			WWW: $sender/website<br />
+		</p>
 
     </body>
 </html>
