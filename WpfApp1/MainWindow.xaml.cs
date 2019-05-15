@@ -32,8 +32,7 @@ namespace WpfApp1 {
         public MainWindow() {
             InitializeComponent();
 
-            // Dölj hela TabControl'en tills vi läst in en fakturafil.
-            tabControl.Visibility = Visibility.Hidden;
+            OnInvoiceChanged(); // Uppdatera UI (vi har ju ingen faktura ännu)
         }
 
         /// <summary>
@@ -131,8 +130,7 @@ namespace WpfApp1 {
         /// </summary>
         private void OnInvoiceChanged(){
             // Om vi har en fakturainstans så uppdaterar vi GUI, annars döljer vi hela TabControl'en.
-            if (invoice != null)
-            {
+            if (invoice != null) {
                 // Uppdatera GUI med aktuella fakturadata
                 invoiceNumberLabel.Content = invoice.invoiceNumber;
                 invoiceDateEdit.Text = invoice.invoiceDate.ToShortDateString();
@@ -159,9 +157,15 @@ namespace WpfApp1 {
 
                 // Fakturan är inläst, uppdatera UI
                 tabControl.Visibility = Visibility.Visible;
+                mnuPrint.IsEnabled = true;
+                mnuLoadLogoImage.IsEnabled = true;
             }
-            else
+            else {
+                // Ingen faktura är inläst, uppdatera UI
                 tabControl.Visibility = Visibility.Hidden;
+                mnuPrint.IsEnabled = false;
+                mnuLoadLogoImage.IsEnabled = false;
+            }
         }
 
         /// <summary>

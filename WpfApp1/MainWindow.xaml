@@ -9,12 +9,12 @@
     <Grid>
         <Menu VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Open invoice..." Click="mnuOpenInvoice_Click"/>
-                <MenuItem Header="Load logo image..." Click="mnuLoadLogoImage_Click"/>
+                <MenuItem x:Name="mnuOpenInvoice" Header="Open invoice..." Click="mnuOpenInvoice_Click"/>
+                <MenuItem x:Name="mnuLoadLogoImage" Header="Load logo image..." Click="mnuLoadLogoImage_Click"/>
                 <Separator/>
-                <MenuItem Header="Print..." Click="mnuPrint_Click"/>
+                <MenuItem x:Name="mnuPrint" Header="Print..." Click="mnuPrint_Click"/>
                 <Separator/>
-                <MenuItem Header="Exit" Click="mnuExit_Click"/>
+                <MenuItem x:Name="mnuExit" Header="Exit" Click="mnuExit_Click"/>
             </MenuItem>
         </Menu>
 

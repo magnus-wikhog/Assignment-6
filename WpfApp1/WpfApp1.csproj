@@ -99,10 +99,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="InvoiceDemo1.txt" />
+    <Resource Include="misc_files\InvoiceDemo1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="invoice_template.html" />
+    <Resource Include="misc_files\InvoiceDemo2.txt" />
+    <Content Include="misc_files\invoice_template.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
