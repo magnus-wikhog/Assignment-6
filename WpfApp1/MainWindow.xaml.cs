@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 
 namespace WpfApp1 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Applikationens huvudfönster
     /// </summary>
     public partial class MainWindow : Window {
         Invoice invoice;
