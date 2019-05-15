@@ -18,7 +18,7 @@
             </MenuItem>
         </Menu>
 
-        <TabControl x:Name="tabControl" Margin="0,18,0,0" Visibility="Hidden">
+        <TabControl x:Name="tabControl" Margin="0,18,0,0">
             
             <TabItem Header="Invoice" x:Name="invoiceTab" Selector.IsSelected="True">
                 <Grid>

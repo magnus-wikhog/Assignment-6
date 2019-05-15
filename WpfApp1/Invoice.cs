@@ -1,8 +1,25 @@
-﻿using System;
+﻿///<summary>
+/// Namn:       Magnus Wikhög
+/// Projekt:    Assignment 6
+/// Inlämnad:   2019-05-15
+///</summary>
+using System;
 using System.Collections.Generic;
 using System.IO;
 
+
+/// <summary>
+/// Klasser för faktura, orderrader och företagsinformation. Obs att jag använder decimal överallt istället för double, eftersom 
+/// decimal inte riskerar att avrundas på samma sätt som float eller double, vilket är viktigt när det gäller finansiell information!
+/// </summary>
 namespace WpfApp1 {
+    
+
+
+    /// <summary>
+    /// Klass som representerar en faktura. Klassen kan själv hantera inläsning av faktura från fil 
+    /// och formatering till HTML via en extern mall.
+    /// </summary>
     class Invoice {
         public int invoiceNumber;
         public DateTime invoiceDate;
@@ -21,12 +38,20 @@ namespace WpfApp1 {
         }
         public string logoImageFilename;
 
+        /// <summary>
+        /// Skapar en ny faktura genom att läsa in en textfil. Returnerar en Invoice-instans eller null om ett fel uppstod
+        /// </summary>
+        /// <param name="filename">Sökväg till textfilen</param>
         public static Invoice createFromFile(string filename) {
+            // Vi använder en StreamReader för att läsa från textfilen
             StreamReader file = null;
 
+            // För att hantera fel som kan uppstå vid filläsning använder vi try-catch-finally
             try {
+                // Öppna filen
                 file = new StreamReader(filename);
 
+                // Skapa en ny Invoiceinstans och läs rad för rad från textfilen
                 Invoice invoice = new Invoice();
                 invoice.invoiceNumber = int.Parse(file.ReadLine());
                 invoice.invoiceDate = DateTime.Parse(file.ReadLine());
@@ -40,7 +65,10 @@ namespace WpfApp1 {
                 invoice.receiver.city = file.ReadLine();
                 invoice.receiver.country = file.ReadLine();
 
+                // Vi tar först reda på hur många orderrader det finns...
                 invoice.itemCount = int.Parse(file.ReadLine());
+
+                // ...och sedan läser vi in så många ordrar
                 for(int i=0; i<invoice.itemCount; i++) {
                     InvoiceItem item = new InvoiceItem();
                     item.description = file.ReadLine();
@@ -62,18 +90,22 @@ namespace WpfApp1 {
                 return invoice;
             }
             catch{
+                // Något gick fel, returnera null
                 return null;
             }
             finally {
+                // Vi stänger alltid filen innan vi returnerar resultatet (om den är öppen)
                 if( file != null )
                     file.Close();
             }
         }
 
-
-        public string toHtml(string filename){
-            string html = File.ReadAllText(filename);
-
+        /// <summary>
+        /// Ersätter placeholders i den angivna HTML-koden med värden från Invoice-instansen.
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        public string toHtml(string html){           
             html = html.Replace("$invoiceNumber", invoiceNumber.ToString());
             html = html.Replace("$invoiceDate", invoiceDate.ToShortDateString());
             html = html.Replace("$dueDate", dueDate.ToShortDateString());
@@ -87,6 +119,8 @@ namespace WpfApp1 {
             html = html.Replace("$receiver/phone", receiver.phone);
             html = html.Replace("$receiver/website", receiver.website);
 
+            // Orderraderna måste skapas här - eftersom vi inte vet hur många orderrader det är på förhand så innehåller HTML-mallen
+            // endast en placeholder för samtliga rader, inte en för varje rad.
             string itemRows = "";
             decimal totalTotal = 0;
             decimal totalTotalTax = 0;
@@ -97,6 +131,7 @@ namespace WpfApp1 {
                     totalTotalTax += totalTax;
                     totalTotal += total;
 
+                    // Skapa HTML för orderraden och infoga aktuella värden
                     itemRows += string.Format("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>",
                         item.description,
                         item.quantity,
@@ -131,7 +166,9 @@ namespace WpfApp1 {
     }
 
 
-
+    /// <summary>
+    /// Klass som representerar vanlig information om ett företag
+    /// </summary>
     class CompanyDetails {
         public string companyName { get; set; }
         public string contactPerson;
@@ -144,14 +181,16 @@ namespace WpfApp1 {
     }
 
 
-
+    /// <summary>
+    /// Klass som representerar en orderrad för en order
+    /// </summary>
     class InvoiceItem {
         public string description { get; set; }
         public int quantity { get; set; }
         public decimal price { get; set; }
         public decimal taxPercent { get; set; }
-        public decimal totalTax { get => quantity*price*taxPercent/100; }
-        public decimal totalPrice { get => quantity * price + totalTax; }
+        public decimal totalTax { get => quantity*price*taxPercent/100; } // Räkna ut total skatt för orderraden
+        public decimal totalPrice { get => quantity * price + totalTax; } // Räkna ut totalt pris inkl. skatt för orderraden
     }
 
 
